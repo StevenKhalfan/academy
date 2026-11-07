@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أكاديمية ستيفن خلفان | Steven Khalfan Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E27; --card:#141A3A; --border:#252C55;
+    --primary:#6C5CE7; --accent:#00D9FF; --green:#00F5A0;
+    --text:#EEF1FF; --muted:#A8B0D6;
+    --grad:linear-gradient(135deg,#6C5CE7,#00D9FF);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:17px}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px}
+  header{position:sticky;top:0;z-index:50;background:rgba(10,14,39,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{font-weight:800;font-size:20px}
+  .logo span{background:var(--grad);-webkit-background-clip:text;color:transparent}
+  .menu{display:flex;gap:28px;list-style:none}
+  .menu a{color:var(--muted);font-weight:500;transition:.2s}
+  .menu a:hover{color:var(--accent)}
+  .burger{display:none;background:none;border:0;color:var(--text);font-size:28px;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:12px;font-weight:700;font-size:16px;border:0;cursor:pointer;transition:.2s;white-space:nowrap}
+  .btn-main{background:var(--grad);color:#fff}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+  .btn-wa{background:#25D366;color:#fff}
+  .btn:hover{transform:translateY(-2px);opacity:.95}
+  .hero{padding:90px 0 60px}
+  .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5vw,54px);line-height:1.3;font-weight:800;margin-bottom:16px}
+  .hero h1 span{background:var(--grad);-webkit-background-clip:text;color:transparent}
+  .hero p{color:var(--muted);font-size:19px;margin-bottom:30px}
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-art{aspect-ratio:1/1;border-radius:24px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:110px;box-shadow:0 30px 80px rgba(108,92,231,.35)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--border);border-radius:18px;margin-bottom:20px}
+  .stat{text-align:center;padding:24px 10px}
+  .stat b{display:block;font-size:30px;color:var(--green)}
+  .stat small{color:var(--muted);font-size:15px}
+  section{padding:70px 0}
+  .title{text-align:center;margin-bottom:40px}
+  .title h2{font-size:32px;font-weight:800}
+  .title p{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:.25s}
+  .card:hover{transform:translateY(-6px);border-color:var(--primary)}
+  .cover{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;font-weight:800;font-size:22px;color:#fff}
+  .c1{background:linear-gradient(135deg,#6C5CE7,#00D9FF)}
+  .c2{background:linear-gradient(135deg,#0F9D58,#00F5A0)}
+  .c3{background:linear-gradient(135deg,#C2185B,#6C5CE7)}
+  .c4{background:linear-gradient(135deg,#FF8A00,#E52E71)}
+  .card-body{padding:22px;display:flex;flex-direction:column;flex:1}
+  .card-body h3{font-size:21px;margin-bottom:8px}
+  .card-body p{color:var(--muted);font-size:16px;flex:1;margin-bottom:16px}
+  .price{font-size:24px;font-weight:800;color:var(--green);margin-bottom:16px}
+  .card-btns{display:flex;gap:10px}
+  .card-btns .btn{flex:1;padding:11px 12px;font-size:15px}
+  .book{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px}
+  .book .cover{aspect-ratio:3/4;border-radius:14px;font-size:24px}
+  .book h3{font-size:28px;margin-bottom:10px}
+  .book p{color:var(--muted);margin-bottom:18px}
+  .quote{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px}
+  .quote p{font-size:17px;margin-bottom:12px}
+  .quote small{color:var(--accent)}
+  .tag{display:inline-block;background:rgba(108,92,231,.2);color:var(--accent);padding:3px 12px;border-radius:20px;font-size:13px;margin-bottom:10px}
+  .contact{text-align:center;background:var(--grad);border-radius:24px;padding:50px 24px}
+  .contact h2{font-size:30px;margin-bottom:10px}
+  .contact p{margin-bottom:24px;opacity:.95}
+  .contact .btn{background:#fff;color:#0A0E27}
+  footer{text-align:center;color:var(--muted);padding:30px 0;border-top:1px solid var(--border);margin-top:40px;font-size:15px}
+  .wa-float{position:fixed;bottom:22px;left:22px;width:58px;height:58px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:60}
+  .wa-float svg{width:30px;height:30px;fill:#fff}
+  @media(max-width:900px){
+    .menu{display:none;position:absolute;top:70px;right:0;left:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border)}
+    .menu.open{display:flex}
+    .menu a{display:block;padding:14px 24px}
+    .burger{display:block}
+    .hero-grid,.book{grid-template-columns:1fr}
+    .hero-art{max-width:320px;margin:0 auto;font-size:80px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .book .cover{max-width:240px;margin:0 auto}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a href="#home" class="logo">أكاديمية <span>ستيفن خلفان</span></a>
+    <ul class="menu" id="menu">
+      <li><a href="#home">الرئيسية</a></li>
+      <li><a href="#courses">الدورات</a></li>
+      <li><a href="#books">الكتب</a></li>
+      <li><a href="#projects">المشاريع</a></li>
+      <li><a href="#blog">المدونة</a></li>
+      <li><a href="#contact">تواصل معنا</a></li>
+    </ul>
+    <button class="burger" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<div class="container hero" id="home">
+  <div class="hero-grid">
+    <div>
+      <h1>حوّل البيانات إلى <span>قرارات ذكية</span></h1>
+      <p>تعلّم، طوّر مهاراتك، وابنِ مستقبلك المهني بمحتوى عربي عملي وواضح.</p>
+      <div class="hero-btns">
+        <a href="#courses" class="btn btn-main">تصفح الدورات</a>
+        <a href="#books" class="btn btn-ghost">تصفح الكتب</a>
+      </div>
+    </div>
+    <div class="hero-art">📊</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stats">
+    <div class="stat"><b>+500</b><small>متعلم</small></div>
+    <div class="stat"><b id="sCourses">0</b><small>دورات</small></div>
+    <div class="stat"><b id="sBooks">0</b><small>كتب</small></div>
+    <div class="stat"><b>قريباً</b><small>مشاريع</small></div>
+  </div>
+</div>
+
+<section id="courses"><div class="container">
+  <div class="title"><h2>الدورات</h2><p>محتوى تطبيقي مصمم لسوق العمل</p></div>
+  <div class="grid" id="coursesGrid"></div>
+</div></section>
+
+<section id="books"><div class="container">
+  <div class="title"><h2>الكتب</h2><p>مراجع عملية تختصر عليك الطريق</p></div>
+  <div id="booksBox"></div>
+</div></section>
+
+<section id="projects"><div class="container">
+  <div class="title"><h2>المشاريع</h2><p>مشاريع حقيقية أعمل عليها</p></div>
+  <div class="grid" id="projectsGrid"></div>
+</div></section>
+
+<section><div class="container">
+  <div class="title"><h2>آراء المتعلمين</h2></div>
+  <div class="grid" id="quotesGrid"></div>
+</div></section>
+
+<section id="blog"><div class="container">
+  <div class="title"><h2>أحدث المقالات</h2></div>
+  <div class="grid" id="blogGrid"></div>
+</div></section>
+
+<section id="contact"><div class="container">
+  <div class="contact">
+    <h2>عندك سؤال أو تبي تطلب؟</h2>
+    <p>تواصل معي مباشرة على الواتساب، والدفع بالتحويل على رقم الهاتف.</p>
+    <a class="btn" target="_blank" id="contactBtn">💬 تواصل عبر واتساب</a>
+  </div>
+</div></section>
+
+<footer>© <span id="year"></span> أكاديمية ستيفن خلفان — جميع الحقوق محفوظة</footer>
+
+<a class="wa-float" target="_blank" id="waFloat" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
+<script>
+/* ===== ✏️ عدّل هنا فقط ===== */
+const WHATSAPP = "96895556767";
+
+const COURSES = [
+  { title:"Power BI من الصفر إلى الاحتراف", desc:"ابنِ لوحات تفاعلية وحوّل البيانات اليومية إلى مؤشرات عملية.", price:29, color:"c1" },
+  { title:"Excel للتحليل الإداري", desc:"مهارات عملية للتقارير والتنظيف والتحليل واتخاذ القرار.", price:19, color:"c2" },
+  { title:"الذكاء الاصطناعي للإنتاجية", desc:"استخدم أدوات AI لتسريع العمل وصناعة مخرجات احترافية.", price:34, color:"c3" }
+];
+
+const BOOKS = [
+  { title:"دليل البيانات للإداري المحترف", desc:"كتاب عملي لبناء عقلية تحليلية في العمل، مع أمثلة وتمارين من واقع بيئة العمل.", price:8, color:"c4" }
+];
+
+const PROJECTS = [
+  // { title:"اسم المشروع", desc:"وصف قصير", link:"https://...", color:"c1" },
+];
+
+const QUOTES = [
+  { text:"شرح واضح ومباشر، والتطبيقات قريبة جداً من واقع العمل.", name:"متعلم من سلطنة عُمان" },
+  { text:"أخيراً فهمت Power BI بطريقة بسيطة وعملية.", name:"موظفة إدارية" },
+  { text:"وفّر علي ساعات من العمل اليومي على Excel.", name:"مشرف عمليات" }
+];
+
+const POSTS = [
+  { title:"5 مؤشرات يجب أن تكون في كل لوحة إدارة", desc:"كيف تختار مؤشرات تقود إلى إجراء واضح؟" },
+  { title:"كيف تبدأ Power BI إذا كنت غير تقني؟", desc:"خطة بسيطة تبدأ بها خلال أسبوع." },
+  { title:"استخدام الذكاء الاصطناعي في العمل اليومي", desc:"أمثلة عملية للبحث والتلخيص وصياغة التقارير." }
+];
+/* ============================ */
+
+const wa = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}\`;
+const orderMsg = (t,p) => `السلام عليكم، أرغب بطلب: ${t} — السعر: ${p} ر.ع`;
+const infoMsg  = t => `السلام عليكم، أريد معرفة تفاصيل أكثر عن: ${t}`;
+
+function productCard(x){
+  return `<div class="card">
+    <div class="cover ${x.color||'c1'}">${x.title}</div>
+    <div class="card-body">
+      <h3>${x.title}</h3><p>${x.desc}</p>
+      <div class="price">${x.price} ر.ع</div>
+      <div class="card-btns">
+        <a class="btn btn-wa" target="_blank" href="${wa(orderMsg(x.title,x.price))}">اطلب عبر واتساب</a>
+        <a class="btn btn-ghost" target="_blank" href="${wa(infoMsg(x.title))}">التفاصيل</a>
+      </div>
+    </div></div>`;
+}
+
+document.getElementById('coursesGrid').innerHTML = COURSES.map(productCard).join('');
+
+document.getElementById('booksBox').innerHTML = BOOKS.map(b => `
+  <div class="book" style="margin-bottom:24px">
+    <div class="cover ${b.color||'c4'}">${b.title}</div>
+    <div>
+      <h3>${b.title}</h3><p>${b.desc}</p>
+      <div class="price">${b.price} ر.ع</div>
+      <a class="btn btn-wa" target="_blank" href="${wa(orderMsg(b.title,b.price))}">اطلب عبر واتساب</a>
+    </div>
+  </div>`).join('');
+
+document.getElementById('projectsGrid').innerHTML = PROJECTS.length
+  ? PROJECTS.map(p => `<div class="card"><div class="cover ${p.color||'c1'}">${p.title}</div>
+      <div class="card-body"><h3>${p.title}</h3><p>${p.desc}</p>
+      <a class="btn btn-main" target="_blank" href="${p.link}">عرض المشروع</a></div></div>`).join('')
+  : `<div class="quote" style="text-align:center;grid-column:1/-1"><p>🚀 المشاريع قريباً</p></div>`;
+
+document.getElementById('quotesGrid').innerHTML = QUOTES.map(q =>
+  `<div class="quote"><p>"${q.text}"</p><small>— ${q.name}</small></div>`).join('');
+
+document.getElementById('blogGrid').innerHTML = POSTS.map(p =>
+  `<div class="card"><div class="card-body"><span class="tag">بيانات وتطوير مهني</span>
+   <h3>${p.title}</h3><p>${p.desc}</p></div></div>`).join('');
+
+document.getElementById('sCourses').textContent = COURSES.length;
+document.getElementById('sBooks').textContent = BOOKS.length;
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('waFloat').href = wa("السلام عليكم");
+document.getElementById('contactBtn').href = wa("السلام عليكم، عندي استفسار عن الأكاديمية");
+document.querySelectorAll('.menu a').forEach(a => a.onclick = () => document.getElementById('menu').classList.remove('open'));
+</script>
+</body>
+</html>
