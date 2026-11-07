@@ -49,6 +49,10 @@
   .card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:.25s}
   .card:hover{transform:translateY(-6px);border-color:var(--primary)}
   .cover{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;font-weight:800;font-size:22px;color:#fff}
+  .project-cover{display:block;width:100%;height:auto;aspect-ratio:16/9}
+  .project-card .tag,.project-card .btn{align-self:flex-start}
+  .project-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+  #projects{scroll-margin-top:70px}
   .c1{background:linear-gradient(135deg,#6C5CE7,#00D9FF)}
   .c2{background:linear-gradient(135deg,#0F9D58,#00F5A0)}
   .c3{background:linear-gradient(135deg,#C2185B,#6C5CE7)}
@@ -121,7 +125,7 @@
     <div class="stat"><b>+500</b><small>متعلم</small></div>
     <div class="stat"><b id="sCourses">0</b><small>دورات</small></div>
     <div class="stat"><b id="sBooks">0</b><small>كتب</small></div>
-    <div class="stat"><b>قريباً</b><small>مشاريع</small></div>
+    <div class="stat"><b>5</b><small>مشاريع</small></div>
   </div>
 </div>
 
@@ -136,8 +140,54 @@
 </div></section>
 
 <section id="projects"><div class="container">
-  <div class="title"><h2>المشاريع</h2><p>مشاريع حقيقية أعمل عليها</p></div>
-  <div class="grid" id="projectsGrid"></div>
+  <div class="title"><h2>مشاريعي</h2><p>مشاريع أعمل عليها في البيانات والتعلّم والخدمات الرقمية</p></div>
+  <div class="grid project-grid" id="projectsGrid">
+    <article class="card project-card">
+      <img class="project-cover" src="assets/projects/mahal.svg" width="640" height="360" alt="" loading="lazy">
+      <div class="card-body">
+        <span class="tag">دليل خدمات المناسبات · قيد التطوير</span>
+        <h3>MAHAL | محل</h3>
+        <p>كل مناسباتك في مكان واحد.</p>
+        <a class="btn btn-ghost" href="projects.html#mahal" aria-label="تفاصيل مشروع MAHAL | محل">تفاصيل المشروع</a>
+      </div>
+    </article>
+    <article class="card project-card">
+      <img class="project-cover" src="assets/projects/trading-lab.svg" width="640" height="360" alt="" loading="lazy">
+      <div class="card-body">
+        <span class="tag">محاكاة تعليمية · نموذج أولي</span>
+        <h3>محل | مختبر التداول</h3>
+        <p>جرّب التداول بحساب افتراضي.</p>
+        <a class="btn btn-ghost" href="projects.html#trading-lab" aria-label="تفاصيل مشروع محل | مختبر التداول">تفاصيل المشروع</a>
+      </div>
+    </article>
+    <article class="card project-card">
+      <img class="project-cover" src="assets/projects/crypto-observatory.svg" width="640" height="360" alt="" loading="lazy">
+      <div class="card-body">
+        <span class="tag">لوحة بيانات · قيد التطوير</span>
+        <h3>مرصد الكريبتو</h3>
+        <p>نظرة على سوق العملات الرقمية.</p>
+        <a class="btn btn-ghost" href="projects.html#crypto-observatory" aria-label="تفاصيل مشروع مرصد الكريبتو">تفاصيل المشروع</a>
+      </div>
+    </article>
+    <article class="card project-card">
+      <img class="project-cover" src="assets/projects/cips-review.svg" width="640" height="360" alt="" loading="lazy">
+      <div class="card-body">
+        <span class="tag">التعلم والمشتريات · قيد التطوير</span>
+        <h3>دفتر مراجعة CIPS</h3>
+        <p>راجع وحدات المشتريات والتوريد.</p>
+        <a class="btn btn-ghost" href="projects.html#cips-review" aria-label="تفاصيل مشروع دفتر مراجعة CIPS">تفاصيل المشروع</a>
+      </div>
+    </article>
+    <article class="card project-card">
+      <img class="project-cover" src="assets/projects/task-notebook.svg" width="640" height="360" alt="" loading="lazy">
+      <div class="card-body">
+        <span class="tag">الإنتاجية وتنظيم الوقت · قيد التطوير</span>
+        <h3>دفتر المهام</h3>
+        <p>رتّب مهامك ووقتك.</p>
+        <a class="btn btn-ghost" href="projects.html#task-notebook" aria-label="تفاصيل مشروع دفتر المهام">تفاصيل المشروع</a>
+      </div>
+    </article>
+  </div>
 </div></section>
 
 <section><div class="container">
@@ -178,10 +228,6 @@ const BOOKS = [
   { title:"دليل البيانات للإداري المحترف", desc:"كتاب عملي لبناء عقلية تحليلية في العمل، مع أمثلة وتمارين من واقع بيئة العمل.", price:8, color:"c4" }
 ];
 
-const PROJECTS = [
-  // { title:"اسم المشروع", desc:"وصف قصير", link:"https://...", color:"c1" },
-];
-
 const QUOTES = [
   { text:"شرح واضح ومباشر، والتطبيقات قريبة جداً من واقع العمل.", name:"متعلم من سلطنة عُمان" },
   { text:"أخيراً فهمت Power BI بطريقة بسيطة وعملية.", name:"موظفة إدارية" },
@@ -195,7 +241,7 @@ const POSTS = [
 ];
 /* ============================ */
 
-const wa = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}\`;
+const wa = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 const orderMsg = (t,p) => `السلام عليكم، أرغب بطلب: ${t} — السعر: ${p} ر.ع`;
 const infoMsg  = t => `السلام عليكم، أريد معرفة تفاصيل أكثر عن: ${t}`;
 
@@ -223,12 +269,6 @@ document.getElementById('booksBox').innerHTML = BOOKS.map(b => `
       <a class="btn btn-wa" target="_blank" href="${wa(orderMsg(b.title,b.price))}">اطلب عبر واتساب</a>
     </div>
   </div>`).join('');
-
-document.getElementById('projectsGrid').innerHTML = PROJECTS.length
-  ? PROJECTS.map(p => `<div class="card"><div class="cover ${p.color||'c1'}">${p.title}</div>
-      <div class="card-body"><h3>${p.title}</h3><p>${p.desc}</p>
-      <a class="btn btn-main" target="_blank" href="${p.link}">عرض المشروع</a></div></div>`).join('')
-  : `<div class="quote" style="text-align:center;grid-column:1/-1"><p>🚀 المشاريع قريباً</p></div>`;
 
 document.getElementById('quotesGrid').innerHTML = QUOTES.map(q =>
   `<div class="quote"><p>"${q.text}"</p><small>— ${q.name}</small></div>`).join('');
