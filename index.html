@@ -67,6 +67,8 @@
   .book .cover{aspect-ratio:3/4;border-radius:14px;font-size:24px}
   .book h3{font-size:28px;margin-bottom:10px}
   .book p{color:var(--muted);margin-bottom:18px}
+  .book-img{display:block;width:100%;height:auto;aspect-ratio:3/4;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+  .books-note{text-align:center;color:var(--muted);font-size:14px;margin-top:8px}
   .quote{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px}
   .quote p{font-size:17px;margin-bottom:12px}
   .quote small{color:var(--accent)}
@@ -86,7 +88,7 @@
     .hero-grid,.book{grid-template-columns:1fr}
     .hero-art{max-width:320px;margin:0 auto;font-size:80px}
     .stats{grid-template-columns:repeat(2,1fr)}
-    .book .cover{max-width:240px;margin:0 auto}
+    .book .cover,.book-img{max-width:240px;margin:0 auto}
   }
 </style>
 </head>
@@ -135,7 +137,7 @@
 </div></section>
 
 <section id="books"><div class="container">
-  <div class="title"><h2>الكتب</h2><p>مراجع عملية تختصر عليك الطريق</p></div>
+  <div class="title"><h2>الكتب</h2><p>مراجع عملية مختصرة، وجديدها: سلسلة التداول للمبتدئين</p></div>
   <div id="booksBox"></div>
 </div></section>
 
@@ -225,8 +227,12 @@ const COURSES = [
 ];
 
 const BOOKS = [
-  { title:"دليل البيانات للإداري المحترف", desc:"كتاب عملي لبناء عقلية تحليلية في العمل، مع أمثلة وتمارين من واقع بيئة العمل.", price:8, color:"c4" }
+  { title:"دليل البيانات للإداري المحترف", desc:"كتاب عملي لبناء عقلية تحليلية في العمل، مع أمثلة وتمارين من واقع بيئة العمل.", price:8, color:"c4" },
+  { title:"الأسهم العالمية للمبتدئين", tag:"سلسلة التداول للمبتدئين · كتاب PDF · 24 صفحة", desc:"دليل مبسّط يشرح لك كيف تعمل أسواق الأسهم العالمية، من الأوامر والمؤشرات إلى إدارة المخاطر، بأمثلة عُمانية وأرقام افتراضية قبل أن تبدأ أول صفقة.", price:8, color:"c2", cover:"assets/books/stocks.webp" },
+  { title:"العملات الرقمية للمبتدئين (Spot)", tag:"سلسلة التداول للمبتدئين · كتاب PDF · 25 صفحة", desc:"افهم البلوك تشين والمحافظ والمنصات والشراء الفوري (Spot) بلغة بسيطة، وتعلّم كيف تحمي نفسك من الاحتيال والتقلبات الحادة قبل أن تشتري أي عملة.", price:8, color:"c4", cover:"assets/books/crypto.webp" },
+  { title:"الفوركس للمبتدئين", tag:"سلسلة التداول للمبتدئين · كتاب PDF · 24 صفحة", desc:"مدخل واضح إلى سوق العملات: أزواج العملات والنقاط والرافعة المالية والهامش، مع معادلات محلولة خطوة بخطوة وتركيز خاص على إدارة المخاطر وحماية رأس المال.", price:8, color:"c1", cover:"assets/books/forex.webp" }
 ];
+const BOOKS_NOTE = "كتب تعليمية فقط، ولا تتضمن توصيات بيع أو شراء. التداول قد يؤدي إلى خسارة رأس المال.";
 
 const QUOTES = [
   { text:"شرح واضح ومباشر، والتطبيقات قريبة جداً من واقع العمل.", name:"متعلم من سلطنة عُمان" },
@@ -262,13 +268,14 @@ document.getElementById('coursesGrid').innerHTML = COURSES.map(productCard).join
 
 document.getElementById('booksBox').innerHTML = BOOKS.map(b => `
   <div class="book" style="margin-bottom:24px">
-    <div class="cover ${b.color||'c4'}">${b.title}</div>
+    ${b.cover ? `<img class="book-img" src="${b.cover}" width="600" height="800" alt="غلاف كتاب ${b.title}" loading="lazy">` : `<div class="cover ${b.color||'c4'}">${b.title}</div>`}
     <div>
+      ${b.tag ? `<span class="tag">${b.tag}</span>` : ''}
       <h3>${b.title}</h3><p>${b.desc}</p>
       <div class="price">${b.price} ر.ع</div>
       <a class="btn btn-wa" target="_blank" href="${wa(orderMsg(b.title,b.price))}">اطلب عبر واتساب</a>
     </div>
-  </div>`).join('');
+  </div>`).join('') + `<p class="books-note">${BOOKS_NOTE}</p>`;
 
 document.getElementById('quotesGrid').innerHTML = QUOTES.map(q =>
   `<div class="quote"><p>"${q.text}"</p><small>— ${q.name}</small></div>`).join('');
