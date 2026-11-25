@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>مختبر التداول — ريلز</title>
+<style>
+:root{--bg:#0A0E27;--card:#141A3A;--border:#252C55;--p:#6C5CE7;--c:#00D9FF;--g:#00F5A0;--t:#EEF1FF;--m:#A8B0D6;--grad:linear-gradient(135deg,#6C5CE7,#00D9FF)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'TajawalL','Tajawal',sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+.glow{position:absolute;border-radius:50%;filter:blur(30px);will-change:transform}
+#g1{width:900px;height:900px;background:radial-gradient(closest-side,rgba(108,92,231,.42),transparent);top:-200px;right:-300px}
+#g2{width:900px;height:900px;background:radial-gradient(closest-side,rgba(0,217,255,.24),transparent);bottom:-250px;left:-320px}
+#grid{position:absolute;inset:-60px;background-image:linear-gradient(rgba(37,44,85,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(37,44,85,.55) 1px,transparent 1px);background-size:60px 60px;-webkit-mask-image:radial-gradient(900px 1200px at 50% 50%,#000 15%,transparent 75%);opacity:.5}
+#bgchart{position:absolute;left:-200px;width:1480px;top:1060px;height:420px;opacity:.16}
+.gt{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* persistent chrome (outside top/bottom 120px) */
+.top{position:absolute;top:150px;right:72px;left:72px;display:flex;align-items:center;justify-content:space-between;z-index:9}
+.logo{display:flex;align-items:center;gap:14px;font-weight:800;font-size:34px}
+.logo .mk{width:56px;height:56px;border-radius:16px;background:var(--grad);display:grid;place-items:center;box-shadow:0 8px 24px rgba(108,92,231,.45)}
+.dots{display:flex;gap:8px}
+.dots i{display:block;width:12px;height:12px;border-radius:6px;background:#2c3466}
+.dots i.on{width:36px;background:var(--grad)}
+.sig{position:absolute;bottom:200px;left:0;right:0;text-align:center;z-index:9;font-size:27px;font-weight:700;color:var(--t);opacity:.85;direction:ltr}
+.sig i{font-style:normal;color:var(--c);margin:0 10px}
+/* scenes */
+.sc{position:absolute;inset:0;opacity:0;will-change:opacity,transform}
+.hl{position:absolute;top:270px;right:72px;left:72px;font-weight:800;font-size:76px;line-height:1.3;text-align:center}
+.hl span{display:inline-block;will-change:transform,opacity;white-space:pre}
+.pglow{position:absolute;left:50%;top:700px;width:760px;height:900px;margin-left:-380px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,217,255,.22),rgba(108,92,231,.12) 60%,transparent);}
+.phwrap{position:absolute;left:50%;top:620px;width:450px;margin-left:-225px;transform-origin:50% 40%}
+.phone{position:relative;border-radius:72px;padding:16px;background:linear-gradient(160deg,#2a3166,#0d1130 45%,#1b2150);box-shadow:0 0 0 2px #313a72 inset,0 60px 100px rgba(0,0,0,.6),0 0 140px rgba(108,92,231,.35)}
+.scr{position:relative;border-radius:56px;overflow:hidden;background:#0d1130;aspect-ratio:1170/2532}
+.scr img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transform-origin:50% 20%}
+.isl{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:30%;height:30px;border-radius:20px;background:#000;z-index:2}
+.miss{position:absolute;inset:0;display:grid;place-items:center;color:var(--t);font-size:30px;background:var(--grad);opacity:.4}
+.tag{position:absolute;padding:16px 26px;border-radius:20px;background:rgba(20,26,58,.92);border:1px solid var(--border);font-weight:700;font-size:30px;display:flex;gap:12px;align-items:center;box-shadow:0 20px 40px rgba(0,0,0,.4);white-space:nowrap}
+/* cover */
+.cv-k{position:absolute;top:300px;left:0;right:0;text-align:center}
+.kick{display:inline-flex;align-items:center;gap:12px;padding:14px 28px;border-radius:999px;border:1px solid var(--border);background:rgba(20,26,58,.85);color:var(--c);font-weight:700;font-size:32px}
+.kick .dot{width:14px;height:14px;border-radius:50%;background:var(--g);box-shadow:0 0 14px var(--g)}
+.cv-t{position:absolute;top:470px;left:0;right:0;text-align:center;font-size:150px;font-weight:900;line-height:1.2}
+.cv-q{position:absolute;top:760px;right:90px;left:90px;text-align:center;font-size:62px;font-weight:800;line-height:1.35}
+.cv-chart{position:absolute;left:60px;right:60px;top:1000px;height:520px}
+/* tracks */
+.rows{position:absolute;top:640px;right:90px;left:90px}
+.row{display:flex;align-items:center;gap:28px;padding:22px 30px;margin-bottom:22px;border-radius:28px;background:var(--card);border:1px solid var(--border)}
+.row .ic{flex:none;width:104px;height:104px;border-radius:26px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(108,92,231,.3),rgba(0,217,255,.15));border:1px solid #39427c}
+.row .nm{flex:1;font-size:46px;font-weight:800}
+.row .ix{font-size:32px;font-weight:800;color:#4b5596;direction:ltr}
+/* cta */
+.price{position:absolute;top:540px;left:0;right:0;display:flex;align-items:baseline;justify-content:center;gap:26px;line-height:1}
+.price .n{font-size:330px;font-weight:900;letter-spacing:-6px}
+.price .cur{font-size:110px;font-weight:800}
+.go{position:absolute;top:1060px;right:90px;left:90px;display:flex;align-items:center;justify-content:center;gap:22px;padding:40px;border-radius:32px;background:var(--grad);font-size:56px;font-weight:900;color:#fff;box-shadow:0 30px 70px rgba(108,92,231,.5)}
+.warn{position:absolute;top:1250px;right:110px;left:110px;display:flex;align-items:center;justify-content:center;gap:14px;font-size:32px;color:var(--m);font-weight:500;text-align:center;line-height:1.5}
+.bds{position:absolute;top:1370px;right:90px;left:90px;display:flex;gap:18px;justify-content:center}
+.bd{flex:1;padding:18px 20px;border-radius:22px;background:var(--card);border:1px solid var(--border);text-align:center;font-size:26px;color:var(--m);font-weight:500;line-height:1.4}
+.bd b{display:block;color:var(--g);font-size:34px;font-weight:800}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="g1" class="glow"></div><div id="g2" class="glow"></div><div id="grid"></div>
+  <div id="bgchart"></div>
+  <div id="scenes"></div>
+  <div class="top"><div class="logo"><span class="mk" id="mk"></span><span class="gt" id="brand"></span></div><div class="dots" id="dots"></div></div>
+  <div class="sig">@stevenkhalfan<i>×</i>@aiminute.om</div>
+</div>
+<script>
+(async function(){
+  const FONT = (window.__FONT_URL || 'fonts/').replace(/\/?$/, '/');
+  const SHOTS = (window.__SHOTS_URL || 'shots/').replace(/\/?$/, '/');
+  const W = {400:'Regular',500:'Medium',700:'Bold',800:'ExtraBold',900:'Black'};
+  const st = document.createElement('style');
+  st.textContent = Object.entries(W).map(([w,f]) => `@font-face{font-family:'TajawalL';font-weight:${w};src:url('${FONT}Tajawal-${f}.ttf') format('truetype')}`).join('\n');
+  document.head.appendChild(st);
+
+  let copy = window.__COPY;
+  if (!copy) { try { copy = await (await fetch('copy.json')).json(); } catch (e) { copy = {}; } }
+  const reel = copy.reel || {duration_s: 24, scenes: []};
+  const car = copy.carousel || [];
+  const coverS = car.find(x => x.kind === 'cover') || {};
+  const tracksS = car.find(x => x.kind === 'tracks') || {};
+  const ctaS = car.find(x => x.kind === 'cta') || {};
+  const brand = coverS.title || 'مختبر التداول';
+  const DUR = +reel.duration_s || 24;
+  const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  // ---- icons
+  const G = `<defs><linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7dff"/><stop offset="1" stop-color="#00D9FF"/></linearGradient></defs>`;
+  const ico = (b, sz=56, stroke='url(#ig)') => `<svg width="${sz}" height="${sz}" viewBox="0 0 48 48" fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${G}${b}</svg>`;
+  const I = {
+    globe:'<circle cx="24" cy="24" r="17"/><ellipse cx="24" cy="24" rx="7.5" ry="17"/><path d="M7.5 18h33M7.5 30h33"/>',
+    bourse:'<path d="M6 17 24 7l18 10z"/><path d="M10 21v15M18 21v15M30 21v15M38 21v15"/><path d="M6 40h36M8 36h32"/>',
+    crypto:'<circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="11.5" stroke-width="2" opacity=".55"/><path d="M20 16v16M20 17h6a3.5 3.5 0 0 1 0 7h-6M20 24h7a4 4 0 0 1 0 8h-7M23 13.5v3M23 31.5v3"/>',
+    fx:'<path d="M9 17h28M31 10l7 7-7 7"/><path d="M39 31H11M17 24l-7 7 7 7"/>',
+    gold:'<path d="M5 40l3-9h13l3 9zM24 40l3-9h13l3 9zM14.5 31l3-9h13l3 9z"/><path d="M38 7v7M34.5 10.5h7" stroke-width="2.6"/>',
+    chart:'<path d="M8 40h32"/><rect x="11" y="22" width="6" height="8" rx="1.5"/><rect x="21" y="14" width="6" height="12" rx="1.5"/><rect x="31" y="20" width="6" height="10" rx="1.5"/><path d="M14 18v4M14 30v4M24 9v5M24 26v5M34 15v5M34 30v4"/>',
+    send:'<path d="M42 6 20 28"/><path d="M42 6 29 42l-9-14-14-9z"/>',
+    info:'<circle cx="24" cy="24" r="17"/><path d="M24 22v11M24 15.5v.5"/>',
+    shield:'<path d="M24 6l15 6v11c0 9-6.5 15.5-15 19-8.5-3.5-15-10-15-19V12z"/><path d="M17 24l5 5 9-10"/>'
+  };
+  const trackIcon = n => /أسهم|stock/i.test(n)?'globe':/مسقط|بورص/i.test(n)?'bourse':/رقمي|crypto/i.test(n)?'crypto':/فوركس|forex/i.test(n)?'fx':/ذهب|فض|gold/i.test(n)?'gold':'chart';
+  document.getElementById('mk').innerHTML = `<svg width="32" height="32" viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M13 10v28M24 6v32M35 14v22"/><rect x="9.5" y="16" width="7" height="12" rx="1.5" fill="#fff"/><rect x="20.5" y="12" width="7" height="16" rx="1.5"/><rect x="31.5" y="19" width="7" height="11" rx="1.5" fill="#fff"/></svg>`;
+  document.getElementById('brand').textContent = brand;
+
+  // ---- deterministic candles
+  function candleData(count, seed){ let r=seed; const rnd=()=>(r=(r*16807)%2147483647)/2147483647; let v=60,o=[]; for(let i=0;i<count;i++){const a=v; v+=(rnd()-0.36)*14; o.push([a,v,Math.max(a,v)+rnd()*7,Math.min(a,v)-rnd()*7]);} return o; }
+  function candleSvg(w,h,data,cls){ const all=data.flat(),mn=Math.min(...all),mx=Math.max(...all),y=x=>h-20-(x-mn)/(mx-mn)*(h-40),cw=w/data.length; let s='',line='';
+    data.forEach(([o,c,hi,lo],i)=>{const up=c>=o,col=up?'#00F5A0':'#6C5CE7',x=i*cw+cw/2; s+=`<g class="${cls}"><line x1="${x}" x2="${x}" y1="${y(hi)}" y2="${y(lo)}" stroke="${col}" stroke-width="3" opacity=".85"/><rect x="${x-cw*.3}" y="${Math.min(y(o),y(c))}" width="${cw*.6}" height="${Math.max(4,Math.abs(y(o)-y(c)))}" rx="4" fill="${col}"/></g>`; line+=(i?'L':'M')+x+' '+y(c)+' ';});
+    return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="none"><defs><linearGradient id="lg${cls}" x1="0" x2="1"><stop offset="0" stop-color="#6C5CE7"/><stop offset="1" stop-color="#00D9FF"/></linearGradient></defs>${s}<path class="${cls}-line" d="${line}" fill="none" stroke="url(#lg${cls})" stroke-width="5" pathLength="1"/></svg>`; }
+  document.getElementById('bgchart').innerHTML = candleSvg(1480, 420, candleData(40, 11), 'bgc');
+
+  // ---- scenes
+  const scenes = (reel.scenes || []).map(s => { const [a,b] = String(s.t).split('-').map(Number); return {...s, a, b}; });
+  const words = t => esc(t).split(/\s+/).map(w => `<span>${w}</span>`).join(' ');
+  const phone = name => `<div class="phwrap"><div class="phone"><div class="scr"><div class="isl"></div><img src="${SHOTS}${esc(name)}.png" data-n="${esc(name)}" alt=""></div></div></div>`;
+  const root = document.getElementById('scenes');
+  scenes.forEach((s, i) => {
+    const el = document.createElement('div'); el.className = 'sc'; s.el = el;
+    if (s.visual === 'cover') {
+      el.innerHTML = `<div class="cv-k"><span class="kick"><span class="dot"></span>${esc(coverS.kicker || '')}</span></div>
+        <div class="cv-t gt">${esc(brand)}</div><div class="cv-q">${words(s.text)}</div>
+        <div class="cv-chart">${candleSvg(960, 520, candleData(18, 7), 'cc')}</div>`;
+    } else if (s.visual === 'tracks') {
+      el.innerHTML = `<div class="hl">${words(s.text)}</div><div class="rows">${(tracksS.tracks||[]).map((t,k)=>`<div class="row"><span class="ic">${ico(I[trackIcon(t)],60)}</span><span class="nm">${esc(t)}</span><span class="ix">${String(k+1).padStart(2,'0')}</span></div>`).join('')}</div>`;
+    } else if (s.visual === 'cta') {
+      const m = String(ctaS.price || '10 ر.ع').match(/^\s*([\d.,]+)\s*(.*)$/) || [null, ctaS.price, ''];
+      const parts = String(reel.on_screen_cta || '').split('•').map(x => x.trim()).filter(Boolean);
+      const bds = (ctaS.bundles || []).map(b => { const k = b.split(/\s+[—–-]\s+/); const pr = k.length > 1 ? k.pop() : ''; return `<div class="bd"><b>${esc(pr)}</b>${esc(k.join(' — '))}</div>`; }).join('');
+      el.innerHTML = `<div class="hl" style="font-size:66px">${words(s.text)}</div>
+        <div class="price"><span class="n gt">${esc(m[1])}</span><span class="cur">${esc(m[2])}</span></div>
+        <div class="go">${ico(I.send,60,'#fff')}<span>${esc(parts[0] || ctaS.cta || '')}</span></div>
+        <div class="warn">${ico(I.info,34,'#A8B0D6')}<span>${esc(parts[1] || ctaS.note || '')}</span></div>
+        <div class="bds">${bds}</div>`;
+    } else {
+      el.innerHTML = `<div class="hl">${words(s.text)}</div><div class="pglow"></div>${phone(s.visual)}`;
+    }
+    root.appendChild(el);
+  });
+  document.getElementById('dots').innerHTML = scenes.map(() => '<i></i>').join('');
+  const dots = [...document.querySelectorAll('#dots i')];
+
+  // ---- deterministic timeline
+  const clamp = x => Math.max(0, Math.min(1, x));
+  const eo = x => 1 - Math.pow(1 - clamp(x), 3);           // easeOutCubic
+  const eio = x => { x = clamp(x); return x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2; };
+  const g1 = document.getElementById('g1'), g2 = document.getElementById('g2'), bg = document.getElementById('bgchart');
+  const IN = 0.45, OUT = 0.35;
+
+  window.seek = function(t){
+    g1.style.transform = `translate(${-60*Math.sin(t/4)}px, ${40*Math.cos(t/5)}px)`;
+    g2.style.transform = `translate(${50*Math.cos(t/4.5)}px, ${-40*Math.sin(t/3.5)}px)`;
+    bg.style.transform = `translateX(${(t/DUR)*180}px)`;
+    const sc0 = scenes[0], scL = scenes[scenes.length-1];
+    bg.style.opacity = (0.16 * (sc0 && sc0.visual==='cover' ? eo((t - sc0.b + 0.2)/0.8) : 1) * (scL && scL.visual==='cta' ? 1 - eo((t - scL.a)/0.5) : 1)).toFixed(3);
+    let active = 0;
+    scenes.forEach((s, i) => {
+      const last = i === scenes.length - 1, first = i === 0;
+      let lt = t - s.a; const len = s.b - s.a;
+      const vin = first ? 1 : eo(lt / IN), vout = last ? 1 : 1 - eo((t - s.b) / OUT);
+      const vis = (t >= s.a - 0.001 && (t < s.b + OUT || last)) ? Math.min(vin, vout) : 0;
+      if (t >= s.a) active = i;
+      const el = s.el; el.style.opacity = vis; el.style.visibility = vis > 0.001 ? 'visible' : 'hidden';
+      el.style.transform = `translateY(${(1 - vin) * 50 - (1 - vout) * 40}px)`;
+      if (vis <= 0.001) return;
+      if (first) lt += 0.9; // frame 0 already shows the cover (thumbnail-safe)
+      const tout = (!last && t > s.b) ? 1 - eo((t - s.b) / 0.16) : 1;
+      // word reveal
+      el.querySelectorAll('.hl span, .cv-q span').forEach((w, k) => {
+        const p = eo((lt - (first ? 0.1 : 0.22) - k * 0.07) / 0.35);
+        w.style.opacity = p * tout; w.style.transform = `translateY(${(1 - p) * 34}px)`;
+      });
+      const ph = el.querySelector('.phwrap');
+      if (ph) {
+        const p = eo(lt / 0.7), z = eio(lt / len);
+        const side = (i % 2 ? 1 : -1);
+        ph.style.transform = `translateY(${(1 - p) * 160 - z * 10}px) rotate(${side * (3 - 2 * z)}deg) scale(${0.96 + 0.06 * z})`;
+        ph.style.opacity = p;
+        const img = el.querySelector('.scr img, .scr .miss');
+        if (img) img.style.transform = `scale(${1 + 0.14 * z}) translateY(${-3 * z}%)`;
+      }
+      if (s.visual === 'cover') {
+        const tt = el.querySelector('.cv-t'), p = eo(lt / 0.8);
+        tt.style.transform = `scale(${0.9 + 0.1 * p + 0.03 * eio(lt / len)})`; tt.style.opacity = p * tout;
+        el.querySelector('.cv-k').style.opacity = eo((lt - 0.2) / 0.5) * tout;
+        el.querySelectorAll('.cc').forEach((c, k) => { const q = eo((lt - 0.3 - k * 0.09) / 0.3); c.style.opacity = q; c.style.transform = `translateY(${(1 - q) * 30}px)`; });
+        const ln = el.querySelector('.cc-line'); ln.style.strokeDasharray = '1'; ln.style.strokeDashoffset = String(1 - eio((lt - 0.3) / 1.9));
+      }
+      if (s.visual === 'tracks') {
+        el.querySelectorAll('.row').forEach((r, k) => { const q = eo((lt - 0.35 - k * 0.18) / 0.45); r.style.opacity = q; r.style.transform = `translateX(${-(1 - q) * 140}px)`; });
+      }
+      if (s.visual === 'cta') {
+        const pr = el.querySelector('.price'), q = eo((lt - 0.15) / 0.5);
+        pr.style.opacity = q; pr.style.transform = `scale(${0.7 + 0.3 * q + 0.02 * Math.sin(lt * 3)})`;
+        const go = el.querySelector('.go'), q2 = eo((lt - 0.45) / 0.4);
+        go.style.opacity = q2; go.style.transform = `translateY(${(1 - q2) * 60}px) scale(${1 + 0.025 * Math.sin(Math.max(0, lt - 0.9) * 6)})`;
+        el.querySelector('.warn').style.opacity = eo((lt - 0.7) / 0.4);
+        el.querySelector('.bds').style.opacity = eo((lt - 0.85) / 0.4);
+      }
+    });
+    dots.forEach((d, k) => d.className = k === active ? 'on' : '');
+  };
+  window.DURATION = DUR;
+
+  await Promise.all(Object.keys(W).map(w => document.fonts.load(`${w} 40px TajawalL`, 'مختبر').catch(()=>{})));
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(im => new Promise(r => { const fail = () => { const d = document.createElement('div'); d.className = 'miss'; d.textContent = im.dataset.n + '.png'; im.replaceWith(d); r(); }; if (im.complete) { im.naturalWidth ? r() : fail(); } else { im.onload = r; im.onerror = fail; } })));
+  window.__fontsOk = document.fonts.check('800 40px TajawalL', 'مختبر');
+  const q = new URLSearchParams(location.search);
+  window.seek(parseFloat(q.get('t') || '0'));
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>
