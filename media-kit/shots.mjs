@@ -19,8 +19,8 @@ const dump = async (name) => fs.writeFileSync(`${OUT}/${name}.txt`, (await p.inn
 
 await p.goto(URL0, { waitUntil: 'networkidle' });
 await wait(2000);
-if (await p.getByText(/أنا طالب/).count()) {
-  await clickText(/أنا طالب/);
+if ((await p.getByText(/أنا طالب|الدخول برمز الطالب/).count()) > 0) {
+  if (await p.getByText(/أنا طالب/).count()) await clickText(/أنا طالب/);
   await p.locator('input').first().fill(CODE);
   await p.locator('button:has-text("دخول")').first().click();
   await wait(3000);
