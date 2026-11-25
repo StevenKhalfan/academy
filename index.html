@@ -68,6 +68,19 @@
   .book h3{font-size:28px;margin-bottom:10px}
   .book p{color:var(--muted);margin-bottom:18px}
   .book-img{display:block;width:100%;height:auto;aspect-ratio:3/4;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+  .group-title{font-size:20px;margin:8px 0 18px;color:var(--text)}
+  .group-title small{font-size:14px;color:var(--muted);font-weight:500;margin-inline-start:8px}
+  #tradingGrid{margin-bottom:8px}
+  #coursesGrid + .group-title{margin-top:40px}
+  .lab-box{display:grid;grid-template-columns:1.6fr 1fr;gap:32px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px}
+  .lab-box h2{font-size:34px;margin:12px 0 2px}
+  .lab-sub{color:var(--accent);margin-bottom:14px}
+  .lab-box p{color:var(--muted);margin-bottom:14px}
+  .lab-list{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:8px}
+  .lab-list li::before{content:"✓ ";color:var(--green)}
+  .lab-note{font-size:13px;margin-top:14px}
+  .lab-art{font-size:120px;text-align:center;background:var(--grad);border-radius:20px;padding:30px 0}
+  .books-note a{color:var(--accent)}
   .books-note{text-align:center;color:var(--muted);font-size:14px;margin-top:8px}
   .quote{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px}
   .quote p{font-size:17px;margin-bottom:12px}
@@ -89,6 +102,8 @@
     .hero-art{max-width:320px;margin:0 auto;font-size:80px}
     .stats{grid-template-columns:repeat(2,1fr)}
     .book .cover,.book-img{max-width:240px;margin:0 auto}
+    .lab-box{grid-template-columns:1fr;padding:26px}
+    .lab-art{display:none}
   }
 </style>
 </head>
@@ -100,6 +115,7 @@
       <li><a href="#home">الرئيسية</a></li>
       <li><a href="#courses">الدورات</a></li>
       <li><a href="#books">الكتب</a></li>
+      <li><a href="#lab">المختبر</a></li>
       <li><a href="#projects">المشاريع</a></li>
       <li><a href="#blog">المدونة</a></li>
       <li><a href="#contact">تواصل معنا</a></li>
@@ -133,12 +149,30 @@
 
 <section id="courses"><div class="container">
   <div class="title"><h2>الدورات</h2><p>محتوى تطبيقي مصمم لسوق العمل</p></div>
+  <h3 class="group-title">البيانات والذكاء الاصطناعي</h3>
   <div class="grid" id="coursesGrid"></div>
+  <h3 class="group-title">التداول للمبتدئين <small>مجانًا داخل مختبر التداول</small></h3>
+  <div class="grid" id="tradingGrid"></div>
 </div></section>
 
 <section id="books"><div class="container">
   <div class="title"><h2>الكتب</h2><p>مراجع عملية مختصرة، وجديدها: سلسلة التداول للمبتدئين</p></div>
   <div id="booksBox"></div>
+</div></section>
+
+<section id="lab"><div class="container">
+  <div class="lab-box">
+    <div>
+      <span class="tag">مجاني · تعليمي · بأموال وهمية</span>
+      <h2>مختبر التداول</h2>
+      <p class="lab-sub">من أكاديمية ستيفن خلفان</p>
+      <p>تدرّب على الأسهم والعملات الرقمية والفوركس بحساب افتراضي وأسعار تدريبية: دروس قصيرة، واختبارات، وأوامر تداول، وحاسبات للربح والخسارة والمخاطرة. تقدّمك ينحفظ في متصفحك.</p>
+      <ul class="lab-list"><li>دروس واختبارات لكل مسار</li><li>محاكي أوامر بحساب افتراضي</li><li>حاسبات الربح والخسارة وحجم الصفقة</li></ul>
+      <a class="btn btn-main" href="https://steven-khalfan-trading-lab.vercel.app/app" target="_blank" rel="noopener">ادخل المختبر</a>
+      <p class="lab-note">تعليمي فقط: لا تداول حقيقي، ولا ربط بأي منصة، ولا توصيات بيع أو شراء.</p>
+    </div>
+    <div class="lab-art" aria-hidden="true">📈</div>
+  </div>
 </div></section>
 
 <section id="projects"><div class="container">
@@ -157,10 +191,10 @@
       <img class="project-cover" src="assets/projects/trading-lab.svg" width="640" height="360" alt="" loading="lazy">
       <div class="card-body">
         <span class="tag">محاكاة تعليمية · نموذج أولي</span>
-        <h3>محل | مختبر التداول</h3>
+        <h3>مختبر التداول</h3>
         <p>جرّب التداول بحساب افتراضي.</p>
         <a class="btn btn-main" style="margin-bottom:10px" href="https://steven-khalfan-trading-lab.vercel.app/app" target="_blank" rel="noopener">جرّب المختبر</a>
-        <a class="btn btn-ghost" href="projects.html#trading-lab" aria-label="تفاصيل مشروع محل | مختبر التداول">تفاصيل المشروع</a>
+        <a class="btn btn-ghost" href="projects.html#trading-lab" aria-label="تفاصيل مشروع مختبر التداول">تفاصيل المشروع</a>
       </div>
     </article>
     <article class="card project-card">
@@ -233,7 +267,14 @@ const BOOKS = [
   { title:"العملات الرقمية للمبتدئين (Spot)", tag:"سلسلة التداول للمبتدئين · كتاب PDF · 25 صفحة", desc:"افهم البلوك تشين والمحافظ والمنصات والشراء الفوري (Spot) بلغة بسيطة، وتعلّم كيف تحمي نفسك من الاحتيال والتقلبات الحادة قبل أن تشتري أي عملة.", price:8, color:"c4", cover:"assets/books/crypto.webp" },
   { title:"الفوركس للمبتدئين", tag:"سلسلة التداول للمبتدئين · كتاب PDF · 24 صفحة", desc:"مدخل واضح إلى سوق العملات: أزواج العملات والنقاط والرافعة المالية والهامش، مع معادلات محلولة خطوة بخطوة وتركيز خاص على إدارة المخاطر وحماية رأس المال.", price:8, color:"c1", cover:"assets/books/forex.webp" }
 ];
-const BOOKS_NOTE = "كتب تعليمية فقط، ولا تتضمن توصيات بيع أو شراء. التداول قد يؤدي إلى خسارة رأس المال.";
+const BOOKS_NOTE = "كتب تعليمية فقط، ولا تتضمن توصيات بيع أو شراء. التداول قد يؤدي إلى خسارة رأس المال. تمرّن على ما تتعلمه مجانًا في <a href=\"#lab\">مختبر التداول</a>.";
+
+const LAB_URL = "https://steven-khalfan-trading-lab.vercel.app/app";
+const TRADING = [
+  { title:"الأسهم العالمية للمبتدئين", desc:"الأسهم وصناديق ETF وأنواع الأوامر وإدارة المخاطر، ثم تطبيق مباشر في المحاكي.", color:"c2" },
+  { title:"العملات الرقمية (Spot) للمبتدئين", desc:"المحافظ والمنصات ودفتر الأوامر والتقلب والأمان، بتداول فوري تدريبي.", color:"c4" },
+  { title:"الفوركس للمبتدئين", desc:"أزواج العملات والنقطة واللوت والرافعة والهامش، وحساب حجم الصفقة خطوة بخطوة.", color:"c1" }
+];
 
 const QUOTES = [
   { text:"شرح واضح ومباشر، والتطبيقات قريبة جداً من واقع العمل.", name:"متعلم من سلطنة عُمان" },
@@ -266,6 +307,13 @@ function productCard(x){
 }
 
 document.getElementById('coursesGrid').innerHTML = COURSES.map(productCard).join('');
+document.getElementById('tradingGrid').innerHTML = TRADING.map(x => `<div class="card">
+    <div class="cover ${x.color}">${x.title}</div>
+    <div class="card-body">
+      <h3>${x.title}</h3><p>${x.desc}</p>
+      <div class="price">مجاني</div>
+      <div class="card-btns"><a class="btn btn-main" target="_blank" rel="noopener" href="${LAB_URL}">ابدأ في المختبر</a></div>
+    </div></div>`).join('');
 
 document.getElementById('booksBox').innerHTML = BOOKS.map(b => `
   <div class="book" style="margin-bottom:24px">
@@ -285,7 +333,7 @@ document.getElementById('blogGrid').innerHTML = POSTS.map(p =>
   `<div class="card"><div class="card-body"><span class="tag">بيانات وتطوير مهني</span>
    <h3>${p.title}</h3><p>${p.desc}</p></div></div>`).join('');
 
-document.getElementById('sCourses').textContent = COURSES.length;
+document.getElementById('sCourses').textContent = COURSES.length + TRADING.length;
 document.getElementById('sBooks').textContent = BOOKS.length;
 document.getElementById('year').textContent = new Date().getFullYear();
 document.getElementById('waFloat').href = wa("السلام عليكم");
